@@ -1,0 +1,8 @@
+Flask>=0.12.2,<0.13
+requests>=2.18.4,<3
+webargs>=5.0.0,<6
+numpy>=1.14.2,<2
+jmespath>=0,<1
+pandas
+esy-osm-pbf
+esy-osmfilter

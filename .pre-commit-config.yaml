@@ -1,0 +1,16 @@
+repos:
+-   repo: git://github.com/pre-commit/pre-commit-hooks
+    sha: v1.2.0
+    hooks:
+    -   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: flake8
+        args:
+        - --ignore=E501
+    -   id: trailing-whitespace
+-   repo: git://github.com/pre-commit/mirrors-pylint
+    sha: v1.8.2
+    hooks:
+    -   id: pylint
+        args:
+        - --rcfile=.pylintrc
