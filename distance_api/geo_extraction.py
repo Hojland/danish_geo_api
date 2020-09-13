@@ -8,7 +8,6 @@ def main():
     #tree = ET.parse('/app/data/pbf/denmark_wgs-84_2020-09-09_pbf_full-detail.pbf')
     osm = esy.osm.pbf.File('/app/data/pbf/denmark_wgs-84_2020-09-09_pbf_full-detail.pbf')
     osm = esy.osm.pbf.File('/app/data/denmark-latest.osm.pbf')
-    parks = [entry for entry in osm if entry.tags.get('leisure') == 'park']
 
     #The natural=coastline tag is used to mark the mean high water springs line along the coastline at the edge of the sea.
     coastline = [entry for entry in osm if entry.tags.get("natural") == "coastline" and isinstance(entry, esy.osm.pbf.file.Way)]
@@ -27,14 +26,14 @@ def main():
     river = [entry for entry in osm if entry.tags.get("waterway") in ["river", "stream", "riverbank"] or entry.tags.get("water") == "river"]
 
     # Bugte. Ved ikke om det er værdifuldt med nu tages det lige med. 
-    river = [entry for entry in osm if entry.tags.get("natural") in ["bay"]]
+    bay = [entry for entry in osm if entry.tags.get("natural") in ["bay"]]
 
     # National parker
     national_park = [entry for entry in osm if entry.tags.get("boundary") == "national_park"]
 
     # Park
-    park = [entry for entry in osm if entry.tags.get("leisure") == "park"]
-    
+    parks = [entry for entry in osm if entry.tags.get("leisure") == "park"]
+
     count = 0
     for entry in osm:
         print(entry)
