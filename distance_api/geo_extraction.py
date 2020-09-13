@@ -10,26 +10,31 @@ def main():
     osm = esy.osm.pbf.File('/app/data/denmark-latest.osm.pbf')
     parks = [entry for entry in osm if entry.tags.get('leisure') == 'park']
 
-    # Coastline data   
     #The natural=coastline tag is used to mark the mean high water springs line along the coastline at the edge of the sea.
     coastline = [entry for entry in osm if entry.tags.get("natural") == "coastline" and isinstance(entry, esy.osm.pbf.file.Way)]
-    
+
     # The natural=beach tag is used to mark a loose geological landform along 
     # the coast or along another body of water consisting of sand, gravel, shingle, pebbles, cobblestones or sometimes shell fragments etc.
     beaches = [entry for entry in osm if entry.tags.get("natural") == "beach" and not isinstance(entry, esy.osm.pbf.file.Node)]
-    
+
     # Søer og fjorde. 
     lakes = [entry for entry in osm if entry.tags.get("natural") == "water" and entry.tags.get("water") == "lake" and not isinstance(entry, esy.osm.pbf.file.Node)]
-    
-    # Google foreslår slev man tager dette med som værende "lakes". Men det ligner mere menneskeskabte basiner det meste af det. 
-    landuse_reservoir = [entry for entry in osm if entry.tags.get("landuse")=="reservoir" and not isinstance(entry, esy.osm.pbf.file.Node)]
-    
-    # River= Åer, streams= Åer der er så smalle at man kan hope over dem.
-    river = [entry for entry in osm if entry.tags.get("waterway") in ["river", "stream", "riverbank"] or entry.tags.get("water") == "river" and isinstance(entry, esy.osm.pbf.file.Way)]
-    
-    # Bugte. Ved ikke om det er værdifuldt med nu tages det lige med. 
-    bay = [entry for entry in osm if entry.tags.get("natural") in ["bay"] and isinstance(entry, esy.osm.pbf.file.Way)]
 
+    # Google foreslår slev man tager dette med som værende "lakes". Men det ligner mere menneskeskabte basiner det meste af det. 
+    landuse_reservoir = [entry for entry in osm if entry.tags.get("landuse")=="reservoir"]
+
+    # River= Åer, streams= Åer der er så smalle at man kan hope over dem.
+    river = [entry for entry in osm if entry.tags.get("waterway") in ["river", "stream", "riverbank"] or entry.tags.get("water") == "river"]
+
+    # Bugte. Ved ikke om det er værdifuldt med nu tages det lige med. 
+    river = [entry for entry in osm if entry.tags.get("natural") in ["bay"]]
+
+    # National parker
+    national_park = [entry for entry in osm if entry.tags.get("boundary") == "national_park"]
+
+    # Park
+    park = [entry for entry in osm if entry.tags.get("leisure") == "park"]
+    
     count = 0
     for entry in osm:
         print(entry)
