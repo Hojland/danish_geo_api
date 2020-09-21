@@ -38,3 +38,10 @@ start_dev:
 
 	@echo "Container started"
 	@echo "Jupyter is running at http://localhost:10000/?token=dist"
+
+build_osm2psql:
+	docker build -f Dockerfile . -t  osm2pgsql:latest
+
+ingest_data:
+	$(eval export POSTGIS_PSW=$(shell bash -c 'read -p "Enter POSTGIS PASSWORD: " pass; echo $$pass'))
+	docker run -i -t --rm osm2pgsql:latest -c 'osm2pgsql --create --slim --cache 2000 --database postgis --username mart --password --host pd1502vu308r3fz.civyps8uzncb.eu-central-1.rds.amazonaws.com --port 5432 /data/denmark-latest.osm.pbf'
